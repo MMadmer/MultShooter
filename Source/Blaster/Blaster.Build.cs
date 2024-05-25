@@ -2,9 +2,9 @@
 
 using UnrealBuildTool;
 
-public class MultShooter : ModuleRules
+public class Blaster : ModuleRules
 {
-	public MultShooter(ReadOnlyTargetRules Target) : base(Target)
+	public Blaster(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
@@ -13,7 +13,8 @@ public class MultShooter : ModuleRules
 			"Core",
 			"CoreUObject",
 			"Engine",
-			"InputCore"
+			"InputCore",
+			"MultiplayerSessions"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] { });

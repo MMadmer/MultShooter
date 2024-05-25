@@ -3,13 +3,13 @@
 using UnrealBuildTool;
 using System.Collections.Generic;
 
-public class MultShooterTarget : TargetRules
+public class BlasterTarget : TargetRules
 {
-	public MultShooterTarget(TargetInfo Target) : base(Target)
+	public BlasterTarget(TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Game;
 		DefaultBuildSettings = BuildSettingsVersion.V4;
 		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_3;
-		ExtraModuleNames.Add("MultShooter");
+		ExtraModuleNames.Add("Blaster");
 	}
 }
