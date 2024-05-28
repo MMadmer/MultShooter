@@ -33,6 +33,7 @@ public:
 
 	void ShowPickupWidget(const bool ShowWidget) const;
 	void SetWeaponState(const EWeaponState State);
+	USkeletalMeshComponent* GetWeaponMesh() const { return WeaponMesh; }
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)

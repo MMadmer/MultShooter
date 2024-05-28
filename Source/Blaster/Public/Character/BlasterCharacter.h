@@ -3,6 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "TurningPlace.h"
+#include "BlasterComponents/CombatComponent.h"
 #include "GameFramework/Character.h"
 #include "BlasterCharacter.generated.h"
 
@@ -20,11 +22,18 @@ class BLASTER_API ABlasterCharacter : public ACharacter
 public:
 	ABlasterCharacter();
 
+	virtual void Tick(float DeltaSeconds) override;
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual void PostInitializeComponents() override;
 
 	void SetOverlappingWeapon(AWeapon* Weapon);
+	bool IsWeaponEquipped() const { return CombatComponent && CombatComponent->EquippedWeapon; }
+	bool IsAiming() const { return CombatComponent && CombatComponent->bAiming; }
+	float GetAOYaw() const { return AOYaw; }
+	float GetAOPitch() const { return AOPitch; }
+	AWeapon* GetEquippedWeapon() const { return CombatComponent ? CombatComponent->EquippedWeapon : nullptr; }
+	ETurningPlace GetTurningInPlace() const { return TurningPlace; }
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
@@ -48,11 +57,21 @@ protected:
 	void LookUp(const float Value);
 	void LookAround(const float Value);
 	void EquipButtonPressed();
+	void CrouchButtonPressed();
+	void AimButtonPressed();
+	void AimButtonReleased();
+	void AimOffset(const float DeltaTime);
+	void TurnInPlace(const float DeltaTime);
 
 	UFUNCTION(Server, Reliable)
 	void ServerEquipButtonPressed();
 
 private:
 	UFUNCTION()
-	void OnRep_OverlappingWeapon(AWeapon* LastWeapon) const;
+	void OnRep_OverlappingWeapon(const AWeapon* LastWeapon) const;
+
+	float AOYaw = 0.0f;
+	float AOPitch = 0.0f;
+	FRotator StartingAimRotation;
+	ETurningPlace TurningPlace;
 };
